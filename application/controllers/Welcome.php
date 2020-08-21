@@ -32,7 +32,7 @@ class Welcome extends CI_Controller {
 		$this->Query->delData('teras_lampung');
 		$this->Query->delData('lam_pos');
 		$this->Query->delData('haluan_lampung');
-		$this->Query->delData('kompas');
+		$this->Query->delData('antara_lampung');
 
 		$this->load->view('home');
 	}

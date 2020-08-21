@@ -134,11 +134,11 @@
 						   aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"
 						>Berita</a>
 						<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-							<li><a href="/berita1" class="dropdown-item">Berita I</a></li>
-							<li><a href="/berita2" class="dropdown-item">Berita II</a></li>
-							<li><a href="/berita3" class="dropdown-item">Berita III</a></li>
-							<li><a href="/berita4" class="dropdown-item">Berita IV</a></li>
-							<li><a href="/berita5" class="dropdown-item">Berita V</a></li>
+							<li><a href="https://www.lampost.co/" target="_blank" class="dropdown-item">Lampung Post</a></li>
+							<li><a href="https://radarlampung.online/" target="_blank" class="dropdown-item">Radar Lampung</a></li>
+							<li><a href="https://www.teraslampung.com/" target="_blank" class="dropdown-item">Teras Lampung</a></li>
+							<li><a href="https://haluanlampung.com/" target="_blank" class="dropdown-item">Haluan Lampung</a></li>
+							<li><a href="https://lampung.antaranews.com/" target="_blank" class="dropdown-item">Antara Lampung</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -201,7 +201,7 @@
 		<button class="tablinks" onclick="openCity(event, 'RL')">Radar Lampung</button>
 		<button class="tablinks" onclick="openCity(event, 'TL')">Teras Lampung</button>
 		<button class="tablinks" onclick="openCity(event, 'HL')">Haluan Lampung</button>
-		<button class="tablinks" onclick="openCity(event, 'kompas')">Liputan6</button>
+		<button class="tablinks" onclick="openCity(event, 'AntaraLampung')">Antara Lampung</button>
 	</div>
 
 	<div id="All" class="tabcontent" style="display: block">
@@ -221,7 +221,7 @@
 			<h5 style="color: #0086b3"><?php echo $data->judul; ?></h5>
 			<a href="<?php echo $data->link; ?>" target="_blank"><?php echo $data->link; ?></a><br><br>
 		<?php endforeach; ?>
-		<?php foreach ($kompas as $data): ?>
+		<?php foreach ($AntaraLampung as $data): ?>
 			<h5 style="color: #0086b3"><?php echo $data->judul; ?></h5>
 			<a href="<?php echo $data->link; ?>" target="_blank"><?php echo $data->link; ?></a><br><br>
 		<?php endforeach; ?>
@@ -255,8 +255,8 @@
 		<?php endforeach; ?>
 	</div>
 
-	<div id="kompas" class="tabcontent">
-		<?php foreach ($kompas as $data): ?>
+	<div id="AntaraLampung" class="tabcontent">
+		<?php foreach ($AntaraLampung as $data): ?>
 			<h5 style="color: #0086b3"><?php echo $data->judul; ?></h5>
 			<a href="<?php echo $data->link; ?>" target="_blank"><?php echo $data->link; ?></a><br><br>
 		<?php endforeach; ?>

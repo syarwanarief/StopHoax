@@ -20,7 +20,7 @@ class search extends CI_Controller
 		$this->Query->delData('lam_pos');
 		$this->Query->delData('teras_lampung');
 		$this->Query->delData('haluan_lampung');
-		$this->Query->delData('kompas');
+		$this->Query->delData('antara_lampung');
 
 		$inputan = $this->input->get('keyword');
 
@@ -73,9 +73,12 @@ class search extends CI_Controller
 			$linkLamPos[] = $post->children(0)->href;
 		}
 
+		$wordLamPos = explode(' ', trim($inputan));
+
 		if (!empty($judulLamPos)) {
 
-			for ($i = 0; $i < count($judulLamPos); $i++) {
+			for ($i = 0; $i < count($judulLamPos); $i++) {/*
+				if (strstr($judulLamPos[$i], $wordLamPos[0]) == true || strstr($judulLamPos[$i], $wordLamPos[1]) == true) {*/
 				$input_data = $this->Query->inputData(array(
 					'judul' => $judulLamPos[$i],
 					'link' => $linkLamPos[$i]
@@ -101,10 +104,12 @@ class search extends CI_Controller
 		}
 
 
+		$wordTL = explode(' ', trim($inputan));
+
 		if (!empty($judulTerasLampung)) {
 
-			for ($i = 0; $i < count($judulTerasLampung); $i++) {/*
-				if (strstr($judulTerasLampung[$i], $inputan) == true) {*/
+			for ($i = 2; $i < count($judulTerasLampung); $i++) {/*
+				if (strstr($judulTerasLampung[$i], $wordTL[0]) == true || strstr($judulTerasLampung[$i], $wordTL[1]) == true) {*/
 				$input_data = $this->Query->inputData(array(
 					'judul' => $judulTerasLampung[$i],
 					'link' => $linkTerasLampung[$i]
@@ -131,10 +136,12 @@ class search extends CI_Controller
 		}
 
 
+		$wordhaluan_lampung = explode(' ', trim($inputan));
+
 		if (!empty($judulhaluan_lampung)) {
 
 			for ($i = 0; $i < count($judulhaluan_lampung); $i++) {/*
-				if (strstr($judulhaluan_lampung[$i], $inputan) == true) {*/
+				if (strstr($judulhaluan_lampung[$i], $wordhaluan_lampung[0]) == true || strstr($judulhaluan_lampung[$i], $wordhaluan_lampung[1]) == true) {*/
 				$input_data = $this->Query->inputData(array(
 					'judul' => $judulhaluan_lampung[$i],
 					'link' => $linkhaluan_lampung[$i]
@@ -143,32 +150,36 @@ class search extends CI_Controller
 			}
 		}
 
-		$urlKompas = "https://www.liputan6.com/search?q=" . $inputanR;
-		$htmlKompas = new simple_html_dom();
-		$htmlKompas->load_file($urlKompas);
+		$urlAntaraLampung = "https://lampung.antaranews.com/search?q=" . $inputanR;
+		$htmlAntaraLampung = new simple_html_dom();
+		$htmlAntaraLampung->load_file($urlAntaraLampung);
 
-		$crawKompas = $htmlKompas->find('a[class=ui--a articles--iridescent-list--text-item__title-link]');
-		$crawKompaslink = $htmlKompas->find('article');
+		$crawAntaraLampung = $htmlAntaraLampung->find('div[class=simple-thumb]');
+		$crawAntaraLampunglink = $htmlAntaraLampung->find('article');
 
-		$judulKompas = array();
-		$linkKompas = array();
+		$judulAntaraLampung = array();
+		$linkAntaraLampung = array();
 
-		foreach ($crawKompas as $post) {
+		foreach ($crawAntaraLampung as $post) {
 
-			$judulKompas[] = $post->children(0)->plaintext;
-			$linkKompas[] = $post->children(0)->href;
+			$judulAntaraLampung[] = $post->children(0)->title;
+			$linkAntaraLampung[] = $post->children(0)->href;
 		}
 
 
-		if (!empty($judulKompas)) {
+		$wordAntaraLampung = explode(' ', trim($inputan));
 
-			for ($i = 0; $i < count($judulKompas); $i++) {/*
-				if (strstr($judulKompas[$i], $inputan) == true) {*/
-				$input_data = $this->Query->inputData(array(
-					'judul' => $judulKompas[$i],
-					'link' => $linkKompas[$i]
-				),
-					'kompas');
+		if (!empty($judulAntaraLampung)) {
+
+			for ($i = 0; $i < count($judulAntaraLampung); $i++) {/*
+				if (strstr($judulAntaraLampung[$i], $wordAntaraLampung[0]) == true || strstr($judulAntaraLampung[$i], $wordAntaraLampung[1]) == true) {*/
+				if ($judulAntaraLampung[$i] != "0") {
+					$input_data = $this->Query->inputData(array(
+						'judul' => $judulAntaraLampung[$i],
+						'link' => $linkAntaraLampung[$i]
+					),
+						'antara_lampung');
+				}
 			}
 		}
 
@@ -181,8 +192,8 @@ class search extends CI_Controller
 		$htmlLamPos->clear();
 		$htmlTerasLampung->clear();
 		$htmlhaluan_lampung->clear();
-		$htmlKompas->clear();
-		unset($htmlRadar, $htmlLamPos, $htmlTerasLampung, $htmlhaluan_lampung, $htmlKompas);
+		$htmlAntaraLampung->clear();
+		unset($htmlRadar, $htmlLamPos, $htmlTerasLampung, $htmlhaluan_lampung, $htmlAntaraLampung);
 		/*
 				echo "Judul : " . json_encode($judul) . "<br>";
 				echo "Harga : " . json_encode($harga) . "<br>";*/
@@ -191,7 +202,7 @@ class search extends CI_Controller
 		$data['lampos'] = $this->Query->getAllData('lam_pos')->result();
 		$data['TerasLampung'] = $this->Query->getAllData('teras_lampung')->result();
 		$data['haluan_lampung'] = $this->Query->getAllData('haluan_lampung')->result();
-		$data['kompas'] = $this->Query->getAllData('kompas')->result();
+		$data['AntaraLampung'] = $this->Query->getAllData('antara_lampung')->result();
 
 		$this->load->view('MenuUtama.php', $data);
 	}
